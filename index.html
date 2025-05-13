@@ -119,29 +119,49 @@
   <script>
     const esp32_ip = 'http://192.168.1.100';
 
+    function disableButtonTemporarily(button) {
+      button.disabled = true;
+      setTimeout(() => {
+        button.disabled = false;
+      }, 5000); // 5 секунд
+    }
+
     document.getElementById("pump-on").addEventListener('click', () => {
       fetch(`${esp32_ip}/relay/on`);
       document.getElementById("pump-status").textContent = 'Активный';
+      disableButtonTemporarily(document.getElementById("pump-on"));
+      document.getElementById("pump-off").disabled = false; // Включить выключение
     });
 
     document.getElementById("pump-off").addEventListener('click', () => {
       fetch(`${esp32_ip}/relay/off`);
       document.getElementById("pump-status").textContent = 'Неактивный';
+      disableButtonTemporarily(document.getElementById("pump-off"));
+      document.getElementById("pump-on").disabled = false; // Включить включение
     });
 
     document.getElementById("motor-forward").addEventListener('click', () => {
       fetch(`${esp32_ip}/motor/forward`);
       document.getElementById("motor-status").textContent = 'Вперед';
+      disableButtonTemporarily(document.getElementById("motor-forward"));
+      document.getElementById("motor-backward").disabled = false; // Включить назад
+      document.getElementById("motor-stop").disabled = false; // Включить остановку
     });
 
     document.getElementById("motor-backward").addEventListener('click', () => {
       fetch(`${esp32_ip}/motor/backward`);
       document.getElementById("motor-status").textContent = 'Назад';
+      disableButtonTemporarily(document.getElementById("motor-backward"));
+      document.getElementById("motor-forward").disabled = false; // Включить вперед
+      document.getElementById("motor-stop").disabled = false; // Включить остановку
     });
 
     document.getElementById("motor-stop").addEventListener('click', () => {
       fetch(`${esp32_ip}/motor/stop`);
       document.getElementById("motor-status").textContent = 'Остановлен';
+      disableButtonTemporarily(document.getElementById("motor-stop"));
+      document.getElementById("motor-forward").disabled = false; // Включить вперед
+      document.getElementById("motor-backward").disabled = false; // Включить назад
     });
 
     setInterval(() => {
