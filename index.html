@@ -7,47 +7,38 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="container">
     <header>
       <h1>Управление дождевой машиной Valley 420</h1>
     </header>
 
-<div class="control-section">
-  <h2>Управление насосом</h2>
-  <button>Включить насос</button>
-  <button>Выключить насос</button>
-  <div class="status">Статус: Активный</div>
-  <input type="range" min="0" max="100" value="50">
-  <button>Остановить мотор</button>
-</div>
-
-      <div class="control">
-        <label for="toggle-pump">Включить/выключить насос</label>
-        <input type="checkbox" id="toggle-pump">
+    <div class="control-grid">
+      <div class="control-section">
+        <h2>Управление насосом</h2>
+        <label class="switch">
+          <input type="checkbox" id="toggle-pump">
+          <span class="slider"></span>
+        </label>
+        <div class="status" id="pump-status">Статус: Неизвестный</div>
+        <button id="stop-motor">Остановить мотор</button>
       </div>
 
-      <div class="control">
-        <button id="stop-motor" class="button">Остановить мотор</button>
-      </div>
-
-      <div class="control">
-        <label for="motor-direction">Направление мотора:</label>
+      <div class="control-section">
+        <h2>Направление мотора</h2>
         <input type="range" id="motor-direction" min="-1" max="1" step="1" value="0">
-        <span id="motor-status">Остановлен</span>
+        <div class="status" id="motor-status">Остановлен</div>
       </div>
+    </div>
 
-      <div class="sensor-info">
-        <h3>Датчики:</h3>
-        <p>Температура: <span id="temp-value">--</span>°C</p>
-        <p>Давление: <span id="pressure-value">--</span> Па</p>
-        <p>Уровень воды: <span id="water-level">--</span> %</p>
-      </div>
+    <div class="sensor-info">
+      <h3>Показания датчиков:</h3>
+      <p>Температура: <span id="temp-value">--</span>°C</p>
+      <p>Давление: <span id="pressure-value">--</span> Па</p>
+      <p>Уровень воды: <span id="water-level">--</span> %</p>
     </div>
   </div>
 
   <script>
-    // Измените на свой IP ESP32
     const esp32_ip = 'http://192.168.1.100';
 
     const pumpToggle = document.getElementById("toggle-pump");
@@ -59,25 +50,22 @@
     const pumpStatus = document.getElementById("pump-status");
     const motorStatus = document.getElementById("motor-status");
 
-    // Обработчик для включения/выключения насоса
     pumpToggle.addEventListener('change', () => {
       if (pumpToggle.checked) {
         fetch(`${esp32_ip}/relay/on`);
-        pumpStatus.textContent = 'Активный';
+        pumpStatus.textContent = 'Статус: Активный';
       } else {
         fetch(`${esp32_ip}/relay/off`);
-        pumpStatus.textContent = 'Неактивный';
+        pumpStatus.textContent = 'Статус: Неактивный';
       }
     });
 
-    // Обработчик для остановки мотора
     stopMotorButton.addEventListener('click', () => {
       fetch(`${esp32_ip}/motor/stop`);
       motorStatus.textContent = 'Остановлен';
       motorDirection.value = 0;
     });
 
-    // Обработчик для изменения направления мотора
     motorDirection.addEventListener('input', () => {
       let direction = motorDirection.value;
       if (direction === '1') {
@@ -92,7 +80,6 @@
       }
     });
 
-    // Обновление показаний датчиков
     setInterval(() => {
       fetch(`${esp32_ip}/sensors`)
         .then(response => response.json())
@@ -102,8 +89,7 @@
           waterLevel.textContent = data.waterLevel;
         })
         .catch(error => console.log('Ошибка при получении данных датчиков:', error));
-    }, 1000); // обновление каждые 1 сек.
+    }, 1000);
   </script>
-
 </body>
 </html>
