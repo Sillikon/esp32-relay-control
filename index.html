@@ -5,33 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Управление дождевыми машинами Valley</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-image: url('valley_machine_image.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
+
+    .container {
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    .transparent-header {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .control-section {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .control-section h2,
+    .control-section p,
+    .control-section .status {
+      text-align: center;
+      color: #fff;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #007bff, #00d4ff);
+      color: white;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #0056b3, #009ec3);
+    }
+
+    .motor-controls {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .sensor-info {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .sensor-info h3,
+    .sensor-info p {
+      color: #fff;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+
   <div class="container">
     <header>
-      <h1>Управление дождевой машиной Valley 420</h1>
+      <h1 class="transparent-header">Управление дождевой машиной Valley 420</h1>
     </header>
 
-    <div class="control-grid">
-      <div class="control-section">
-        <h2>Управление насосом</h2>
-        <label class="switch">
-          <input type="checkbox" id="toggle-pump">
-          <span class="slider"></span>
-        </label>
-        <div class="status" id="pump-status">Статус: Неизвестный</div>
-        <button id="stop-motor">Остановить мотор</button>
-      </div>
+    <div class="control-section">
+      <h2>Управление насосом</h2>
+      <button id="pump-on">Включить насос</button>
+      <button id="pump-off">Выключить насос</button>
+      <div class="status">Статус: <span id="pump-status">Неизвестный</span></div>
+    </div>
 
-      <div class="control-section">
-        <h2>Направление мотора</h2>
-        <input type="range" id="motor-direction" min="-1" max="1" step="1" value="0">
-        <div class="status" id="motor-status">Остановлен</div>
+    <div class="control-section">
+      <h2>Запуск мотора</h2>
+      <p>Направление мотора:</p>
+      <div class="motor-controls">
+        <button id="motor-backward">Назад</button>
+        <button id="motor-stop">Остановить</button>
+        <button id="motor-forward">Вперед</button>
       </div>
+      <div class="status">Текущий статус мотора: <span id="motor-status">Остановлен</span></div>
     </div>
 
     <div class="sensor-info">
-      <h3>Показания датчиков:</h3>
+      <h3>Датчики:</h3>
       <p>Температура: <span id="temp-value">--</span>°C</p>
       <p>Давление: <span id="pressure-value">--</span> Па</p>
       <p>Уровень воды: <span id="water-level">--</span> %</p>
@@ -41,55 +119,42 @@
   <script>
     const esp32_ip = 'http://192.168.1.100';
 
-    const pumpToggle = document.getElementById("toggle-pump");
-    const motorDirection = document.getElementById("motor-direction");
-    const stopMotorButton = document.getElementById("stop-motor");
-    const tempValue = document.getElementById("temp-value");
-    const pressureValue = document.getElementById("pressure-value");
-    const waterLevel = document.getElementById("water-level");
-    const pumpStatus = document.getElementById("pump-status");
-    const motorStatus = document.getElementById("motor-status");
-
-    pumpToggle.addEventListener('change', () => {
-      if (pumpToggle.checked) {
-        fetch(`${esp32_ip}/relay/on`);
-        pumpStatus.textContent = 'Статус: Активный';
-      } else {
-        fetch(`${esp32_ip}/relay/off`);
-        pumpStatus.textContent = 'Статус: Неактивный';
-      }
+    document.getElementById("pump-on").addEventListener('click', () => {
+      fetch(`${esp32_ip}/relay/on`);
+      document.getElementById("pump-status").textContent = 'Активный';
     });
 
-    stopMotorButton.addEventListener('click', () => {
+    document.getElementById("pump-off").addEventListener('click', () => {
+      fetch(`${esp32_ip}/relay/off`);
+      document.getElementById("pump-status").textContent = 'Неактивный';
+    });
+
+    document.getElementById("motor-forward").addEventListener('click', () => {
+      fetch(`${esp32_ip}/motor/forward`);
+      document.getElementById("motor-status").textContent = 'Вперед';
+    });
+
+    document.getElementById("motor-backward").addEventListener('click', () => {
+      fetch(`${esp32_ip}/motor/backward`);
+      document.getElementById("motor-status").textContent = 'Назад';
+    });
+
+    document.getElementById("motor-stop").addEventListener('click', () => {
       fetch(`${esp32_ip}/motor/stop`);
-      motorStatus.textContent = 'Остановлен';
-      motorDirection.value = 0;
-    });
-
-    motorDirection.addEventListener('input', () => {
-      let direction = motorDirection.value;
-      if (direction === '1') {
-        fetch(`${esp32_ip}/motor/forward`);
-        motorStatus.textContent = 'Вперед';
-      } else if (direction === '-1') {
-        fetch(`${esp32_ip}/motor/backward`);
-        motorStatus.textContent = 'Назад';
-      } else {
-        fetch(`${esp32_ip}/motor/stop`);
-        motorStatus.textContent = 'Остановлен';
-      }
+      document.getElementById("motor-status").textContent = 'Остановлен';
     });
 
     setInterval(() => {
       fetch(`${esp32_ip}/sensors`)
         .then(response => response.json())
         .then(data => {
-          tempValue.textContent = data.temperature;
-          pressureValue.textContent = data.pressure;
-          waterLevel.textContent = data.waterLevel;
+          document.getElementById("temp-value").textContent = data.temperature;
+          document.getElementById("pressure-value").textContent = data.pressure;
+          document.getElementById("water-level").textContent = data.waterLevel;
         })
         .catch(error => console.log('Ошибка при получении данных датчиков:', error));
     }, 1000);
   </script>
+
 </body>
 </html>
