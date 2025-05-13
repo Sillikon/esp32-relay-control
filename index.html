@@ -12,12 +12,12 @@
 
   <script>
     function turnOn() {
-      fetch("http://YOUR_ESP32_IP/relay/on")
+      fetch("http://192.168.2.55/relay/on")
         .then(() => alert("Реле включено"));
     }
 
     function turnOff() {
-      fetch("http://YOUR_ESP32_IP/relay/off")
+      fetch("http://192.168.2.55/relay/off")
         .then(() => alert("Реле выключено"));
     }
   </script>
