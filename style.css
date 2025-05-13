@@ -30,10 +30,43 @@ header h1 {
 
 /* Секция управления */
 .control-section {
-  margin-top: 30px;
-  background-color: #fff;
+ background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px; /* Закругленные углы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для эффекта объема */
+  width: 300px;
+  margin: 20px auto; /* Центрирование секции */
+}
+.control-section h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.control-section button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 10px; /* Закругленные углы кнопок */
+  cursor: pointer;
+}
+
+.control-section button:hover {
+  background-color: #45a049; /* Темнее при наведении */
+}
+
+.control-section .status {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.control-section input[type="range"] {
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .control {
