@@ -1,25 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ESP32 Relay Control</title>
+  <meta charset="UTF-8">
+  <title>Управление Реле</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      background-color: #f0f0f0;
+    }
+    button {
+      font-size: 20px;
+      padding: 15px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .on {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .off {
+      background-color: #f44336;
+      color: white;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Управление реле</h1>
-  <button onclick="turnOn()">Включить</button>
-  <button onclick="turnOff()">Выключить</button>
+
+  <h1>Управление Реле</h1>
+
+  <button class="on" onclick="toggleRelay('on')">Включить</button>
+  <button class="off" onclick="toggleRelay('off')">Выключить</button>
+
+  <div id="status">Статус: неизвестен</div>
 
   <script>
-    function turnOn() {
-      fetch("http://192.168.2.55/relay/on")
-        .then(() => alert("Реле включено"));
-    }
+    const esp32_ip = "http://192.168.1.105"; // ← здесь укажи свой IP
 
-    function turnOff() {
-      fetch("http://192.168.2.55/relay/off")
-        .then(() => alert("Реле выключено"));
+    function toggleRelay(state) {
+      fetch(`${esp32_ip}/relay/${state}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('status').innerText = 'Статус: ' + data;
+        })
+        .catch(error => {
+          document.getElementById('status').innerText = 'Ошибка подключения';
+          console.error('Ошибка:', error);
+        });
     }
   </script>
+
 </body>
 </html>
+
