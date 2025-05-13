@@ -5,12 +5,18 @@ body {
   padding: 0;
   background-color: #f5f5f5;
   color: #333;
+   background-image: url('valley_machine_image.jpg'); /* Путь к картинке */
+  background-size: cover; /* Чтобы картинка покрывала весь экран */
+  background-position: center center; /* Центрируем картинку */
+  background-attachment: fixed; /* Закрепляем картинку на месте при прокрутке */
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Белый фон с прозрачностью для лучшей видимости текста */
+  border-radius: 10px;
 }
 
 header {
