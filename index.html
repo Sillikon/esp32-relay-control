@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESP32 Relay Control</title>
+</head>
+<body>
+  <h1>Управление реле</h1>
+  <button onclick="turnOn()">Включить</button>
+  <button onclick="turnOff()">Выключить</button>
+
+  <script>
+    function turnOn() {
+      fetch("http://YOUR_ESP32_IP/relay/on")
+        .then(() => alert("Реле включено"));
+    }
+
+    function turnOff() {
+      fetch("http://YOUR_ESP32_IP/relay/off")
+        .then(() => alert("Реле выключено"));
+    }
+  </script>
+</body>
+</html>
