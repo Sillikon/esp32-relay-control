@@ -1,118 +1,121 @@
-/* Общие стили */
+/* Основные стили */
 body {
-   background-image: url('valley_machine_image.jpg'); /* Путь к картинке */
-  background-size: cover; /* Чтобы картинка покрывала весь экран */
-  background-position: center center; /* Центрируем картинку */
-  background-attachment: fixed; /* Закрепляем картинку на месте при прокрутке */
   margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8); /* Белый фон с прозрачностью для лучшей видимости текста */
-  border-radius: 10px;
-}
-
-header {
-  text-align: center;
-}
-
-header h1 {
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('valley_machine_image.jpg'); /* Фон */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: #2c3e50;
 }
 
-.machine-img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 20px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.88);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовок */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+header h1 {
+  font-size: 28px;
+  color: #1f2d3d;
 }
 
 /* Секция управления */
 .control-section {
- background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
-  padding: 20px;
-  border-radius: 15px; /* Закругленные углы */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для эффекта объема */
-  width: 300px;
-  margin: 20px auto; /* Центрирование секции */
+  background: #ffffffdd;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin-bottom: 30px;
 }
+
 .control-section h2 {
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.control-section button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 10px; /* Закругленные углы кнопок */
-  cursor: pointer;
-}
-
-.control-section button:hover {
-  background-color: #45a049; /* Темнее при наведении */
-}
-
-.control-section .status {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.control-section input[type="range"] {
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.control {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 22px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.control label {
-  font-size: 18px;
-}
-
-.control input[type="checkbox"] {
-  transform: scale(1.5);
-}
-
-.control input[type="range"] {
-  width: 150px;
-}
-
-button {
-  padding: 10px 20px;
+/* Кнопки */
+.control-section button,
+.control button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   font-size: 16px;
-  cursor: pointer;
   background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.control-section button:hover,
+.control button:hover {
+  background-color: #2980b9;
 }
 
-button:hover {
-  background-color: #2980b9;
+/* Статус */
+.status {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: #2ecc71;
+}
+
+/* Ползунок */
+input[type="range"] {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  accent-color: #3498db;
+}
+
+/* Переключатель (чекбокс) */
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+.control label {
+  font-size: 18px;
+}
+.control input[type="checkbox"] {
+  transform: scale(1.4);
+  margin-left: 15px;
+}
+
+/* Статус мотора */
+#motor-status {
+  display: inline-block;
+  font-weight: bold;
+  margin-left: 10px;
+  color: #555;
 }
 
 /* Информация о датчиках */
 .sensor-info {
-  margin-top: 20px;
+  margin-top: 30px;
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
 .sensor-info h3 {
   font-size: 20px;
-  color: #2c3e50;
+  margin-bottom: 10px;
 }
-
 .sensor-info p {
   font-size: 18px;
+  margin: 8px 0;
 }
