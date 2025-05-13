@@ -1,22 +1,28 @@
-/* Основные стили */
-body {
+/* Общие стили */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('valley_machine_image.jpg'); /* Фон */
+  background-image: url('valley_machine_image.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #2c3e50;
+  min-height: 100vh;
 }
 
+/* Контейнер */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 40px auto;
   padding: 30px;
-  background-color: rgba(255, 255, 255, 0.88);
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Заголовок */
@@ -29,93 +35,75 @@ header h1 {
   color: #1f2d3d;
 }
 
-/* Секция управления */
-.control-section {
-  background: #ffffffdd;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  margin-bottom: 30px;
+/* Блоки управления */
+.control-section,
+.control,
+.sensor-info {
+  background-color: rgba(240, 248, 255, 0.8);
+  padding: 20px 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
 }
 
-.control-section h2 {
+/* Заголовки в блоках */
+.control-section h2,
+.sensor-info h3 {
   font-size: 22px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: center;
+  color: #2c3e50;
 }
 
 /* Кнопки */
-.control-section button,
-.control button {
+button {
+  display: block;
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  margin: 10px 0;
   font-size: 16px;
-  background-color: #3498db;
+  background: linear-gradient(90deg, #3498db, #2980b9);
   color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.control-section button:hover,
-.control button:hover {
-  background-color: #2980b9;
+  transition: 0.3s ease;
 }
 
-/* Статус */
-.status {
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  color: #2ecc71;
+button:hover {
+  background: linear-gradient(90deg, #2980b9, #1f618d);
 }
 
-/* Ползунок */
+/* Ползунки */
 input[type="range"] {
   width: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 15px 0;
   accent-color: #3498db;
 }
 
-/* Переключатель (чекбокс) */
+/* Чекбоксы */
 .control {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 15px 0;
-}
-.control label {
   font-size: 18px;
 }
+
 .control input[type="checkbox"] {
-  transform: scale(1.4);
-  margin-left: 15px;
+  transform: scale(1.5);
 }
 
-/* Статус мотора */
+/* Статусы */
+.status,
 #motor-status {
-  display: inline-block;
+  text-align: center;
   font-weight: bold;
-  margin-left: 10px;
-  color: #555;
+  margin-top: 10px;
+  color: #16a085;
 }
 
-/* Информация о датчиках */
-.sensor-info {
-  margin-top: 30px;
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.sensor-info h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
+/* Секция с датчиками */
 .sensor-info p {
   font-size: 18px;
-  margin: 8px 0;
+  margin: 10px 0;
 }
