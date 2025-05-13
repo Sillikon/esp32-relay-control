@@ -2,11 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>💦Включение насоса💦</title>
+  <title>Valley</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
       padding-top: 50px;
       background-color: #f0f0f0;
     }
@@ -34,7 +36,7 @@
 </head>
 <body>
 
-  <h1>Управление Реле</h1>
+  <h1>💦Включение насоса💦</h1>
 
   <button class="on" onclick="toggleRelay('on')">Включить</button>
   <button class="off" onclick="toggleRelay('off')">Выключить</button>
@@ -42,7 +44,7 @@
   <div id="status">Статус: неизвестен</div>
 
   <script>
-    const esp32_ip = "http://192.168.2.55"; // ← здесь укажи свой IP
+    const esp32_ip = "http://192.168.2.55"; 
 
     function toggleRelay(state) {
       fetch(`${esp32_ip}/relay/${state}`)
