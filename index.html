@@ -74,6 +74,11 @@
       transition: none; /* Убираем анимацию для неактивных кнопок */
     }
 
+    button:disabled:hover,
+    button:disabled:active {
+      transform: none; /* Убираем трансформацию при наведении и нажатии */
+    }
+
     .motor-controls {
       display: flex;
       justify-content: space-around;
