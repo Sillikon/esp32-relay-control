@@ -56,11 +56,21 @@
       cursor: pointer;
       background: linear-gradient(45deg, #007bff, #00d4ff);
       color: white;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.1s;
     }
 
     button:hover {
       background: linear-gradient(45deg, #0056b3, #009ec3);
+      transform: scale(1.05);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
     }
 
     .motor-controls {
@@ -93,7 +103,7 @@
     <div class="control-section">
       <h2>Управление насосом</h2>
       <button id="pump-on">Включить насос</button>
-      <button id="pump-off">Выключить насос</button>
+      <button id="pump-off" disabled>Выключить насос</button>
       <div class="status">Статус: <span id="pump-status">Неизвестный</span></div>
     </div>
 
@@ -118,50 +128,65 @@
 
   <script>
     const esp32_ip = 'http://192.168.1.100';
-
-    function disableButtonTemporarily(button) {
-      button.disabled = true;
-      setTimeout(() => {
-        button.disabled = false;
-      }, 5000); // 5 секунд
-    }
+    let isPumpBusy = false;
+    let isMotorBusy = false;
 
     document.getElementById("pump-on").addEventListener('click', () => {
+      if (isPumpBusy) return;
+      isPumpBusy = true;
+      document.getElementById("pump-on").disabled = true;
+      document.getElementById("pump-off").disabled = false;
       fetch(`${esp32_ip}/relay/on`);
       document.getElementById("pump-status").textContent = 'Активный';
-      disableButtonTemporarily(document.getElementById("pump-on"));
-      document.getElementById("pump-off").disabled = false; // Включить выключение
+
+      setTimeout(() => { isPumpBusy = false; }, 5000);  // Задержка 5 секунд
     });
 
     document.getElementById("pump-off").addEventListener('click', () => {
+      if (isPumpBusy) return;
+      isPumpBusy = true;
+      document.getElementById("pump-off").disabled = true;
+      document.getElementById("pump-on").disabled = false;
       fetch(`${esp32_ip}/relay/off`);
       document.getElementById("pump-status").textContent = 'Неактивный';
-      disableButtonTemporarily(document.getElementById("pump-off"));
-      document.getElementById("pump-on").disabled = false; // Включить включение
+
+      setTimeout(() => { isPumpBusy = false; }, 5000);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-forward").addEventListener('click', () => {
+      if (isMotorBusy) return;
+      isMotorBusy = true;
+      document.getElementById("motor-forward").disabled = true;
+      document.getElementById("motor-backward").disabled = true;
+      document.getElementById("motor-stop").disabled = false;
       fetch(`${esp32_ip}/motor/forward`);
       document.getElementById("motor-status").textContent = 'Вперед';
-      disableButtonTemporarily(document.getElementById("motor-forward"));
-      document.getElementById("motor-backward").disabled = false; // Включить назад
-      document.getElementById("motor-stop").disabled = false; // Включить остановку
+
+      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-backward").addEventListener('click', () => {
+      if (isMotorBusy) return;
+      isMotorBusy = true;
+      document.getElementById("motor-backward").disabled = true;
+      document.getElementById("motor-forward").disabled = true;
+      document.getElementById("motor-stop").disabled = false;
       fetch(`${esp32_ip}/motor/backward`);
       document.getElementById("motor-status").textContent = 'Назад';
-      disableButtonTemporarily(document.getElementById("motor-backward"));
-      document.getElementById("motor-forward").disabled = false; // Включить вперед
-      document.getElementById("motor-stop").disabled = false; // Включить остановку
+
+      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-stop").addEventListener('click', () => {
+      if (isMotorBusy) return;
+      isMotorBusy = true;
+      document.getElementById("motor-stop").disabled = true;
+      document.getElementById("motor-forward").disabled = false;
+      document.getElementById("motor-backward").disabled = false;
       fetch(`${esp32_ip}/motor/stop`);
       document.getElementById("motor-status").textContent = 'Остановлен';
-      disableButtonTemporarily(document.getElementById("motor-stop"));
-      document.getElementById("motor-forward").disabled = false; // Включить вперед
-      document.getElementById("motor-backward").disabled = false; // Включить назад
+
+      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
     });
 
     setInterval(() => {
