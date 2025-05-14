@@ -133,7 +133,7 @@
   </div>
 
   <script>
-    const esp32_ip = 'http://192.168.1.100';
+    const esp32_ip = 'http://192.168.2.55';
     let isPumpBusy = false;
     let isMotorBusy = false;
 
@@ -145,7 +145,7 @@
       fetch(`${esp32_ip}/relay/on`);
       document.getElementById("pump-status").textContent = 'Активный';
 
-      setTimeout(() => { isPumpBusy = false; }, 5000);  // Задержка 5 секунд
+      setTimeout(() => { isPumpBusy = false; }, 2500);  // Задержка 5 секунд
     });
 
     document.getElementById("pump-off").addEventListener('click', () => {
@@ -156,7 +156,7 @@
       fetch(`${esp32_ip}/relay/off`);
       document.getElementById("pump-status").textContent = 'Неактивный';
 
-      setTimeout(() => { isPumpBusy = false; }, 5000);  // Задержка 5 секунд
+      setTimeout(() => { isPumpBusy = false; }, 2500);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-forward").addEventListener('click', () => {
@@ -168,7 +168,7 @@
       fetch(`${esp32_ip}/motor/forward`);
       document.getElementById("motor-status").textContent = 'Вперед';
 
-      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
+      setTimeout(() => { isMotorBusy = false; }, 2500);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-backward").addEventListener('click', () => {
@@ -180,7 +180,7 @@
       fetch(`${esp32_ip}/motor/backward`);
       document.getElementById("motor-status").textContent = 'Назад';
 
-      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
+      setTimeout(() => { isMotorBusy = false; }, 2500);  // Задержка 5 секунд
     });
 
     document.getElementById("motor-stop").addEventListener('click', () => {
@@ -192,7 +192,7 @@
       fetch(`${esp32_ip}/motor/stop`);
       document.getElementById("motor-status").textContent = 'Остановлен';
 
-      setTimeout(() => { isMotorBusy = false; }, 5000);  // Задержка 5 секунд
+      setTimeout(() => { isMotorBusy = false; }, 2500);  // Задержка 5 секунд
     });
 
     setInterval(() => {
